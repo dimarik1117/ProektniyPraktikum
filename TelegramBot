@@ -1,0 +1,132 @@
+import telebot
+import requests
+from telebot import types
+
+token = "5973246476:AAGXWO9c8R74NC9uUjtCSegNwPoB4Qr6UkE"
+bot = telebot.TeleBot(token)
+
+
+@bot.message_handler(commands=['start'])
+def start(message):
+    keyboard = types.ReplyKeyboardMarkup()
+    keyboard.row("/start", "/help")
+    keyboard.row("/weather", "/news", "/horoscope")
+    bot.send_message(message.chat.id, 'Добрый день!☀ Что Вас интересует сегодня?📱'
+                                      '\nКоманда /help расскажет про все команды, которыми я владею👾',
+                     reply_markup=keyboard)
+
+
+@bot.message_handler(commands=['help'])
+def start_message(message):
+    bot.send_message(message.chat.id, 'Вот список всех моих команд:'
+                                      '\n/start - возвращение к начальному сообщению🤖'
+                                      '\n/weather - показывает текущую погоду в вашем городе⛅'
+                                      '\n/news - выводит новостные сайты на различные темы💻'
+                                      '\n/horoscope - выводит гороскопы для всех знаков зодиака🔯')
+
+
+@bot.message_handler(commands=['weather'])
+def start_message(message):
+    keyboard = types.ReplyKeyboardMarkup()
+    keyboard.row("/start")
+    bot.send_message(message.chat.id, 'Какой город Вас интересует?🏙', reply_markup=keyboard)
+
+
+@bot.message_handler(commands=['news'])
+def start_message(message):
+    keyboard = types.ReplyKeyboardMarkup()
+    keyboard.row("/start", "⚽Спорт⚽", "📢Политика📢")
+    keyboard.row("🎬Кино🎬", "⛩Аниме⛩", "🎮Видеоигры🎮")
+    bot.send_message(message.chat.id, 'Какая из данных тем Вас интересует?🖥', reply_markup=keyboard)
+
+
+@bot.message_handler(commands=['horoscope'])
+def start_message(message):
+    keyboard = types.ReplyKeyboardMarkup()
+    keyboard.row("/start", "🔯Общий🔯")
+    keyboard.row("♈Овен♈", "♉Телец♉", "♊Близнецы♊")
+    keyboard.row("♋Рак♋", "♌Лев♌", "♍Дева♍")
+    keyboard.row("♎Весы♎", "♏Скорпион♏", "♐Стрелец♐")
+    keyboard.row("♑Козерог♑", "♒Водолей♒", "♓Рыбы♓")
+    bot.send_message(message.chat.id, 'Гороскоп для какого знака зодиака Вас интересует?🔯', reply_markup=keyboard)
+
+
+@bot.message_handler(content_types=['text'])
+def answer(message):
+    if message.text.lower() == '⚽спорт⚽':
+        bot.send_message(message.chat.id, 'Ваша ссылка на сайт с новостями спорта:'
+                         '\nhttps://www.sport-express.ru/news/')
+    elif message.text.lower() == '📢политика📢':
+        bot.send_message(message.chat.id, 'Ваша ссылка на сайт с новостями политики:'
+                         '\nhttps://lenta.ru/rubrics/world/politic/2/')
+    elif message.text.lower() == '🎬кино🎬':
+        bot.send_message(message.chat.id, 'Ваша ссылка на сайт с новостями кино:'
+                         '\nhttps://www.playground.ru/news/movies')
+    elif message.text.lower() == '⛩аниме⛩':
+        bot.send_message(message.chat.id, 'Ваша ссылка на сайт с новостями аниме:'
+                         '\nhttps://animag.ru/news')
+    elif message.text.lower() == '🎮видеоигры🎮':
+        bot.send_message(message.chat.id, 'Ваша ссылка на сайт с новостями видеоигр:'
+                         '\nhttps://stopgame.ru/news')
+    elif message.text.lower() == '🔯общий🔯':
+        bot.send_message(message.chat.id, 'Ваша ссылка на общий гороскоп:'
+                         '\nhttps://horoscopes.rambler.ru/zodiac/general/all/today/?updated')
+    elif message.text.lower() == '♈овен♈':
+        bot.send_message(message.chat.id, 'Ваша ссылка на гороскоп для овнов:'
+                         '\nhttps://horoscopes.rambler.ru/aries/')
+    elif message.text.lower() == '♉телец♉':
+        bot.send_message(message.chat.id, 'Ваша ссылка на гороскоп для тельцов:'
+                         '\nhttps://horoscopes.rambler.ru/taurus/')
+    elif message.text.lower() == '♊близнецы♊':
+        bot.send_message(message.chat.id, 'Ваша ссылка на гороскоп для близнецов:'
+                         '\nhttps://horoscopes.rambler.ru/gemini/')
+    elif message.text.lower() == '♋рак♋':
+        bot.send_message(message.chat.id, 'Ваша ссылка на гороскоп для раков:'
+                         '\nhttps://horoscopes.rambler.ru/cancer/')
+    elif message.text.lower() == '♌лев♌':
+        bot.send_message(message.chat.id, 'Ваша ссылка на гороскоп для львов:'
+                         '\nhttps://horoscopes.rambler.ru/leo/')
+    elif message.text.lower() == '♍дева♍':
+        bot.send_message(message.chat.id, 'Ваша ссылка на гороскоп для дев:'
+                         '\nhttps://horoscopes.rambler.ru/virgo/')
+    elif message.text.lower() == '♎весы♎':
+        bot.send_message(message.chat.id, 'Ваша ссылка на гороскоп для весов:'
+                         '\nhttps://horoscopes.rambler.ru/libra/')
+    elif message.text.lower() == '♏скорпион♏':
+        bot.send_message(message.chat.id, 'Ваша ссылка на гороскоп для скорпионов:'
+                         '\nhttps://horoscopes.rambler.ru/scorpio/')
+    elif message.text.lower() == '♐стрелец♐':
+        bot.send_message(message.chat.id, 'Ваша ссылка на гороскоп для стрельцов:'
+                         '\nhttps://horoscopes.rambler.ru/sagittarius/')
+    elif message.text.lower() == '♑козерог♑':
+        bot.send_message(message.chat.id, 'Ваша ссылка на гороскоп для козерогов:'
+                         '\nhttps://horoscopes.rambler.ru/capricorn/')
+    elif message.text.lower() == '♒водолей♒':
+        bot.send_message(message.chat.id, 'Ваша ссылка на гороскоп для водолеев:'
+                         '\nhttps://horoscopes.rambler.ru/aquarius/')
+    elif message.text.lower() == '♓рыбы♓':
+        bot.send_message(message.chat.id, 'Ваша ссылка на гороскоп для рыб:'
+                         '\nhttps://horoscopes.rambler.ru/pisces/')
+    else:
+        try:
+            city = message.text
+            appid = '33344c7d0773f4f21362c8f74a8a665b'
+
+            res = requests.get("http://api.openweathermap.org/data/2.5/weather",
+                               params={'q': city, 'units': 'metric', 'lang': 'ru', 'APPID': appid})
+            data = res.json()
+            bot.send_message(message.chat.id, "Город: {}"
+                                              "\nПогодные условия: {}"
+                                              "\nТемпература: {}"
+                                              "\nМинимальная температура: {}"
+                                              "\nМаксимальная температура: {}"
+                                              "\nСкорость ветра: {}".format(city, data['weather'][0]['description'],
+                                                                            data['main']['temp'],
+                                                                            data['main']['temp_min'],
+                                                                            data['main']['temp_max'],
+                                                                            data['wind']['speed']))
+        except:
+            bot.send_message(message.chat.id, "Извините, я Вас не понял.")
+
+
+bot.polling()
